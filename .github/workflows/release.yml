@@ -1,0 +1,47 @@
+name: Deploy to Pages
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.pages-deploy.outputs.page_url }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Inject
+        env:
+          A62B35: ${{ secrets.A62B35 }}
+          BE7C62: ${{ secrets.BE7C62 }}
+        run: |
+          python3 -c "
+          import pathlib, sys, os
+          env_a = os.environ.get('A62B35', '')
+          env_b = os.environ.get('BE7C62', '')
+          doc = pathlib.Path('index.html')
+          body = doc.read_text(encoding='utf-8')
+          result = body
+          if env_a:
+              result = result.replace('<!-- f4f23eecba6f300f61a1b410ee -->', env_a)
+          if env_b:
+              result = result.replace('<!-- e160cd840de5533c -->', env_b)
+          if result == body and (env_a or env_b):
+              sys.exit(1)
+          if result != body:
+              doc.write_text(result, encoding='utf-8')
+          "
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: pages-deploy
+        uses: actions/deploy-pages@v4
